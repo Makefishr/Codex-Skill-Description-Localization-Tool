@@ -3,10 +3,6 @@
 Codex skill 的技能简介生成并应用简体中文译文。
 项目默认只扫描个人 skill；受管目录和插件缓存必须显式使用 `--include-managed` 才会纳入。
 
-> **English summary:** A small, approval-gated tool for localizing Codex skill-card
-> descriptions. It plans changes before writing, preserves unrelated bytes, rejects
-> unsafe structures and symlinks, and keeps machine-specific approvals outside the repository.
-
 ## 特性
 
 - `scan`、`plan`、`validate` 和不带 `--confirm` 的 `restore` 只读；`apply --confirm` 与 `restore --confirm` 才会写入简介。
