@@ -52,6 +52,24 @@ ${CODEX_HOME}/localize-skill-cards/approved-translations.json
 
 ## 安装
 
+### 一条命令安装（推荐）
+
+需要 Node.js 18 或更高版本。使用开源的 [`skills` CLI](https://github.com/vercel-labs/skills) 将本 skill 仅安装到 Codex 的用户级目录：
+
+```bash
+npx --yes skills@latest add Makefishr/codex-localize-skill-cards --skill localize-skill-cards --agent codex --global --yes
+```
+
+安装完成后，重新启动 Codex 或打开一个新任务，然后显式调用：
+
+```text
+$localize-skill-cards
+```
+
+这条命令只分发仓库中的 skill 文件，不会把本机批准译文、运行记录或其他运行时状态上传到仓库。已有同名安装或自行修改过已安装文件时，请先备份；不要用一键安装覆盖尚未迁移的本地修改。
+
+### 手动安装
+
 将 `skills/localize-skill-cards/` 作为一个 skill 子目录安装到你的 Codex skill 根目录，例如：
 
 ```text
@@ -111,7 +129,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_localize_skill_cards
 
 - 插件 stable ID 仍依赖 Codex 插件缓存的约定目录层级；非标准缓存布局会被跳过。
 - 运行记录包含本机路径，因此只适合本地恢复，不应提交到公开仓库。
-- 这是一个 skill 源码目录，不是 Python 包，也没有自动安装器或发布到 skill registry 的流程。
+- 这是一个 skill 源码目录，不是 Python 包，也尚未打包为原生 Codex plugin 或发布到官方 plugin directory；一键安装使用第三方 `skills` CLI。
 - `--include-managed` 可能扫描大量系统和插件文件；使用前应确认范围，并检查 `plan` 输出。
 - 工具不会验证译文的语言风格或产品商标，只执行结构、安全和长度约束；人工审批仍是必要步骤。
 - 升级安装可能覆盖已安装 skill 的本地修改。请先备份，保留运行记录，并在升级后重新执行 `scan`、`plan` 和测试。
