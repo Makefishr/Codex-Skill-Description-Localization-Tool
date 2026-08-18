@@ -1,6 +1,6 @@
 # Codex Localize Skill Cards
 
-安全地为 Codex skill card 的 `interface.short_description` 生成并应用简体中文译文。
+Codex skill 的技能简介生成并应用简体中文译文。
 项目默认只扫描个人 skill；受管目录和插件缓存必须显式使用 `--include-managed` 才会纳入。
 
 > **English summary:** A small, approval-gated tool for localizing Codex skill-card
@@ -26,13 +26,6 @@
 ```text
 ${CODEX_HOME}/localize-skill-cards/approved-translations.json
 ```
-
-如果没有设置 `CODEX_HOME`，实际位置是 `Path.home() / ".codex" / "localize-skill-cards" / "approved-translations.json"`。运行记录默认保存到同目录下的 `runs/`。这些文件是本机状态，不属于公开仓库；请不要提交或分享它们。`references/approved-translations.json` 只保留空 schema/template，作为格式参考，不会被默认加载。
-批准 catalog 使用固定 JSON schema：顶层必须包含 `version: 1`、`selection_rule` 和 `translations` 对象；不接受 bare map、未知顶层字段、非字符串译文或无效 stable ID。stable ID 形如 `personal/name`、`system/name` 或 `plugin/vendor/package/skill`；name segment 只允许 ASCII 字母、数字、点、下划线和连字符，但不能恰好是 `.` 或 `..`。`scan` 输出 discovery JSON；`plan` 输出包含 `error`/`needs-approval` 的结构化计划；`validate` 输出计划并在未解决时返回非零；`apply --confirm` 采用 all-or-nothing 规则，任何 error 或 needs-approval 都会拒绝且不写入。
-
-恢复操作先预览，再使用 `restore --confirm`。只接受当前 `CODEX_HOME` 规范运行目录内、本工具生成、schema/type/status/路径一致且权限私有的真实记录文件；外部记录、symlink、未知或异常字段和非 completed 记录会被拒绝。恢复前还会检查 stable ID、目标范围和文本漂移。恢复个人 skill 时默认拒绝 system 和插件目标；恢复 managed 记录必须显式使用 `--include-managed`。
-
-为避免异常输入耗尽内存，工具采用显式上限并在超限时失败：单个输入及生成后的 `openai.yaml` 256 KiB、翻译 catalog 2 MiB、一次发现 10,000 个候选且累计 128 MiB、restore record 8 MiB 且最多 4,096 个 change。读取采用 `limit + 1` 的 bounded read，不会静默截断。
 
 ## 仓库布局
 
@@ -95,17 +88,6 @@ python3 scripts/localize_skill_cards.py plan --translations /path/to/approved-tr
 
 建议的人工流程是 `scan` → `plan` → 逐项审阅和批准 → `validate` → `apply --confirm`。没有本地批准文件时，英文项会保持 `needs-approval`，不会因为仓库内的空模板而自动改变。`plan` 会对 Codex、GitHub、PR、CI、API 及旧文中的全大写或内部大写标识执行保留检查，并对可能的 Title Case 产品名输出 warning；看到 warning 时应逐条复核。
 成功的 `apply --confirm` stdout 是单一 JSON 对象，包含 `status`、`plan` 和 `record` 字段；预期输入、记录和权限错误会以简洁 stderr 返回非零退出码，不输出半截 JSON。
-
-## 测试
-
-项目只使用 Python 标准库。运行：
-
-```bash
-cd skills/localize-skill-cards/scripts
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_localize_skill_cards
-```
-
-测试覆盖默认和 managed 范围、版本选择、元数据合同、空公开 catalog、审批状态、私有且最小化的唯一记录、可信 restore schema、资源上限、原子写入、事务回滚、恢复漂移和路径越界保护。
 
 ## 已知限制
 
