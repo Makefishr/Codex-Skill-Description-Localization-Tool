@@ -1,0 +1,6 @@
+interface:
+  display_name: "汉化技能简介"
+  short_description: "安全汉化 Codex 技能卡片简介并保留原有语义和格式"
+  default_prompt: "使用 $localize-skill-cards 扫描并计划汉化技能卡片简介。"
+policy:
+  allow_implicit_invocation: false
