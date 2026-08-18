@@ -1,4 +1,5 @@
 # Codex Localize Skill Cards
+Codex skill技能简介汉化工具
 
 Codex skill 的技能简介生成并应用简体中文译文。
 项目默认只扫描个人 skill；受管目录和插件缓存必须显式使用 `--include-managed` 才会纳入。
