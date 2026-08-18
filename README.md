@@ -57,7 +57,7 @@ ${CODEX_HOME}/localize-skill-cards/approved-translations.json
 需要 Node.js 18 或更高版本。使用开源的 [`skills` CLI](https://github.com/vercel-labs/skills) 将本 skill 仅安装到 Codex 的用户级目录：
 
 ```bash
-npx --yes skills@latest add Makefishr/codex-localize-skill-cards --skill localize-skill-cards --agent codex --global --yes
+npx --yes skills@latest add Makefishr/Codex-Skill-Description-Localization-Tool --skill localize-skill-cards --agent codex --global --yes
 ```
 
 安装完成后，重新启动 Codex 或打开一个新任务，然后显式调用：
